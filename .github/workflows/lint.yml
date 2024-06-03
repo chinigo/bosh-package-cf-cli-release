@@ -5,7 +5,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    container: ghcr.io/chinigorg/bosh-package-cf-cli-release:187042013-release-workflow-latest
+    container: ghcr.io/chinigorg/bosh-package-cf-cli-release-ci:187042013-release-workflow-latest
 
     steps:
     - name: Checkout cli bosh release repo
