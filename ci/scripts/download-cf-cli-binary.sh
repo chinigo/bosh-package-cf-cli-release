@@ -43,35 +43,7 @@ download_cf_cli_binary() {
     --no-verbose \
      "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=v${_major_version}&source=bosh-package-cf-cli-release-workflow"
 
-  print_stderr "Successfully downloaded CF CLI v${_major_version}. Extracting."
-
-
-  # Extract tarball
-  tarball_regex="^.*/cf(${_major_version}?)-cli_([0-9]+\.[0-9]+\.[0-9]+)_linux_x86-64\.tgz$" \
-  _tarball=$(find "${_resolved_output_dir}" \
-    -type f \
-    -regextype posix-extended \
-    -regex "${tarball_regex}" \
-    | head -1)
-
-  if [[ -z "${_tarball}" ]]; then
-    print_stderr "ERROR: Could not find CF CLI tarball in downloaded artifact."
-    print_stderr "Looked for file with regex ${tarball_regex} in ${_resolved_output_dir}"
-    print_stderr "Contents of ${_resolved_output_dir}:"
-
-    ls -laR "${_resolved_output_dir}"
-    fail_with "Failing."
-  fi
-
-  tar xzf "${_tarball}" -C "${_resolved_output_dir}"
-  print_stderr "Successfully extracted CF CLI v${_major_version}."
-
-
-  # Print version to console for posterity
-  _downloaded_binary="${_resolved_output_dir}/cf"
-  _downloaded_binary_version=$("${_downloaded_binary}" version)
-
-  print_stderr "Successfully downloaded and extracted ${_downloaded_binary_version} to ${_downloaded_binary}"
+  print_stderr "Download complete."
 }
 
 
