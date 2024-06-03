@@ -32,11 +32,11 @@ download_cf_cli_binary() {
   [[ "${_major_version}" =~ [^0-9]+ ]] && fail_with "--major-version must be specified as number, e.g. \"8\" instead of \"v8\"."
 
   # Create named subdir in base output directory for version. Base output directory defaults to cwd if not specified.
-  _resolved_output_dir="$(realpath -m "${_output_dir:-${PWD}}")/v${_major_version}"
+  _resolved_output_dir="$(realpath -m "${_output_dir:-${PWD}}")/${_major_version}"
 
 
   # Download specified binary
-  print_stderr "Downloading CF CLI v${_major_version} to directory ${_resolved_output_dir}"
+  print_stderr "Downloading CF CLI ${_major_version} to directory ${_resolved_output_dir}"
 
   wget --trust-server-names \
     --directory-prefix "${_resolved_output_dir}" \
