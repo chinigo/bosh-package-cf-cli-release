@@ -18,27 +18,15 @@ jobs:
     - name: Checkout cli bosh release repo
       uses: actions/checkout@v4
 
-    - name: Acquire latest CF CLI V8
-      run: |
-        mkdir -p v8-cli-binary
-        cd v8-cli-binary
-        wget --trust-server-names "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=v8&source=bosh-package-cf-cli-release-workflow"
-        tar -xvzf cf8-cli_*_linux_x86-64.tgz --wildcards 'cf*'
-        ./cf version
-
-    - name: Create bosh release candidate
-      id: create-bosh-release-candidate-step
+    - name: Acquire latest CF CLI binaries
       env:
         TRACE: ${{ runner.debug }}
         # S3 final release config to upload
         # ACCESS_KEY_ID:
         # SECRET_KEY:
       run: |
-        source ./ci/scripts/create-bosh-release-candidate.sh
-        create_bosh_release_candidate 8
-
-        mkdir -p candidate-release-output
-        bosh create-release --timestamp-version --tarball=./candidate-release-output/cf-cli-dev-release.tgz
+        ./ci/scripts/download-cf-cli-binary.sh --major-version 7 --output-dir ./build/cf-cli-binaries
+        ./ci/scripts/download-cf-cli-binary.sh --major-version 8 --output-dir ./build/cf-cli-binaries
 
     ## Store tgz with bosh release candidate
 
