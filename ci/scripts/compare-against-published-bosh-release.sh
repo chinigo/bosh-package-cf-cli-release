@@ -23,6 +23,8 @@ compare_against_published_bosh_release() {
     esac
   done
 
+  [[ -z "${_downloaded_binaries_dir:-}" ]] && fail_with "Must provide --downloaded-binaries-dir"
+
   # Start off assuming no updates
   _blobs_updated=false
 
